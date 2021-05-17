@@ -23,8 +23,17 @@ loan <- sqldf("SELECT *,
               END as def
               from loan50k
               ")
-loan_main <- sqldf(" SELECT def, amount, term, rate, grade, length, home, income, verified, reason, state, debtIncRat, delinq2yr, inq6mth, openAcc, pubRec, revolRatio totalAcc, totalBal, totalRevLim, accOpen24, bcOpen, bcRatio, totalLim, totalRevBal, totalBclim, totalIlLim
-                  from loan
+loan1 <- sqldf("SELECT *,
+              CASE
+              WHEN verified = 'Verified' THEN 'Verified'
+              WHEN verified = 'Source Verified' THEN 'Verified'
+              WHEN verified = 'Not Verified' THEN 'Not Verified'
+              END as IncVeri
+              from loan
+              ")
+
+loan_main <- sqldf(" SELECT def, amount, term, rate, grade, length, home, income, IncVeri, reason, state, debtIncRat, delinq2yr, inq6mth, openAcc, pubRec, revolRatio totalAcc, totalBal, totalRevLim, accOpen24, bcOpen, bcRatio, totalLim, totalRevBal, totalBclim, totalIlLim
+                  from loan1
                   WHERE status = 'Fully Paid' or status = 'Default' or status = 'Charged Off'
                    ")
 
@@ -32,6 +41,8 @@ loan_main <- sqldf(" SELECT def, amount, term, rate, grade, length, home, income
 #split(loan_main, sample(c(rep("train", 17328), rep("test", 8664),rep("eval", 8663))))
 
 library(caTools)
+
+set.seed(123)
 split = sample.split(loan_main, SplitRatio = 0.5)
 train = subset(loan_main, split == TRUE)
 nottrain = subset(loan_main, split == FALSE)
@@ -48,10 +59,10 @@ lrm(def~grade, data=test)
 
 
 boxplot(rnorm(1000))
-with(train, table(verified, grade))
+with(train, table(IncVeri, grade))
 
 
-mod5<- lrm(def ~ grade + verified + rate , data=train)
+mod5<- lrm(def ~ grade + IncVeri + rate , data=train)
 mod5
 
 
