@@ -48,8 +48,6 @@ library(rms)
 lrm(def~grade, data=test)
 
 
-
-
 boxplot(rnorm(1000))
 with(train, table(verified, grade))
 
