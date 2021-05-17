@@ -1,4 +1,3 @@
-
 #for(x in loans$status){
 #if (x == "Charged Off" || x == "Default"){
 #loans$default <- 1
@@ -50,4 +49,24 @@ lrm(def~grade, data=test)
 
 boxplot(rnorm(1000))
 with(train, table(verified, grade))
+
+
+mod5<- lrm(def ~ grade + verified + rate , data=train)
+mod5
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
