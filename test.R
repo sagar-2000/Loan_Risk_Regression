@@ -62,17 +62,32 @@ boxplot(rnorm(1000))
 with(train, table(IncVeri, grade))
 
 
-mod5<- lrm(def ~ grade + IncVeri + rate , data=train)
+mod5<- lrm(def ~ grade + IncVeri + rate + AmIncRate, data=train)
 mod5
 
+mod6<- lrm(def ~ reason, data=train)
+mod6
 
+mod6<- lrm(def ~ reason, data=train)
+mod6
 
+#mod6<- lrm(amount ~ reason, data=train)
+mod8<- glm(def ~ grade + IncVeri + rate + amount, data = train, family = binomial() )
+mod8
 
+mod9<- lrm(def ~ AmIncRate, data=train)
+mod9
 
+train$AmIncRate<- train$amount/train$income
+AIC(mod5)
+timeLine <- c(-20 , +20)
+plot (train$reason$house,train$amount)
 
+plot( table( train$reason['house'], train$amount), xlab="amount",ylab="reason")
 
+barplot(train$amount,train$reason )
 
-
+x<- train$reason["house"].Length()
 
 
 
