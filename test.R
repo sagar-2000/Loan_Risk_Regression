@@ -98,9 +98,18 @@ xtabs(~ train$grade + train$def)
 mod10<- glm(def ~ ., data = train, family = binomial() )
 summary(mod10)
 
+library(gmodels)
 
 
-#ff
+data <-CrossTable(train$grade, train$def, prop.r = TRUE, prop.c = FALSE, prop.t = FALSE, prop.chisq = FALSE)
+
+data_relationship <- data$prop.row[,2]  
+
+position <- data_relationship / 2
+text(x = barplot(data_relationship),labels=names(data_relationship), y = position)
+title("The worse the grade, the higher the default probability")
+
+
 
 
 
