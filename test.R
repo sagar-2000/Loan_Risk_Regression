@@ -129,5 +129,9 @@ modelll <- train(def ~ term + grade + rate + home + debtIncRat + delinq2yr + inq
 # Summarize the results
 print(model)
 
-test$pred1 <- predict(mod_selected, newdata=test)
 lrm(def ~ pred1, data=test)
+
+test$pred1 <- predict(mod_selected, newdata=test)
+pred1.perf
+table(test$def,test$pred1>0)
+
