@@ -135,3 +135,23 @@ test$pred1 <- predict(mod_selected, newdata=test)
 pred1.perf
 table(test$def,test$pred1>0)
 
+library(randomForest) 
+set.seed(42) 
+fit.forest <- randomForest(def ~ grade + rate + home + debtIncRat + delinq2yr + inq6mth + accOpen24 + totalIlLim, data = train,
+                           importance=TRUE)
+fit.forest
+
+importance(fit.forest, type=2)
+
+test$pred2 <- predict(fit.forest, newdata=test)
+
+table(test$def,test$pred2>0)
+
+library(rpart)
+library(rpart.plot)
+dtree_test <- rpart(def ~ grade + rate + home + debtIncRat + delinq2yr + inq6mth + accOpen24 + totalIlLim, method="class", data=test,parms=list(split="information"))
+dtree_test$cptable
+plotcp(dtree_test)
+dtree_test.pruned <- prune(dtree_test, cp=.01639344)
+prp(dtree_test.pruned, type = 2, extra = 104,
+    fallen.leaves = TRUE, main="Decision Tree")
