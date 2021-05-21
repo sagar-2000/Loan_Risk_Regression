@@ -61,7 +61,7 @@ lrm(def~grade, data=test)
 boxplot(rnorm(1000))
 with(train, table(IncVeri, grade))
 
-
+income
 mod5<- lrm(def ~ grade + IncVeri + rate + AmIncRate, data=train)
 mod5
 
@@ -81,13 +81,22 @@ mod9
 train$AmIncRate<- train$amount/train$income
 AIC(mod5)
 timeLine <- c(-20 , +20)
-plot (train$reason$house,train$amount)
+plot(train$amount , train$reason)
+
+hist(train$reason)
 
 plot( table( train$reason['house'], train$amount), xlab="amount",ylab="reason")
 
 barplot(train$amount,train$reason )
 
 x<- train$reason["house"].Length()
+
+xtabs(~ train$def + train$reason)
+
+xtabs(~ train$grade + train$def)
+
+mod10<- glm(def ~ ., data = train, family = binomial() )
+summary(mod10)
 
 
 
