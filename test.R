@@ -118,6 +118,8 @@ new_train$income_sq <- NULL
 mod_full<- glm(def ~ ., data = new_train, family = binomial() )
 summary(mod_full)
 
+mod_selected<- glm(def ~ term + grade + rate + home + debtIncRat + delinq2yr + inq6mth + accOpen24 + totalIlLim, data = train, family = binomial() )
+summary(mod_selected)
 
 
 
