@@ -101,15 +101,22 @@ summary(mod10)
 library(gmodels)
 
 
-data <-CrossTable(train$grade, train$def, prop.r = TRUE, prop.c = FALSE, prop.t = FALSE, prop.chisq = FALSE)
+data <-CrossTable(train$home, train$def, prop.r = TRUE, prop.c = FALSE, prop.t = FALSE, prop.chisq = FALSE)
 
 data_relationship <- data$prop.row[,2]  
 
 position <- data_relationship / 2
 text(x = barplot(data_relationship),labels=names(data_relationship), y = position)
-title("The worse the grade, the higher the default probability")
 
 
+new_train <- train
+
+new_train$reason <- NULL
+new_train$state <- NULL
+new_train$income_sq <- NULL
+
+mod_full<- glm(def ~ ., data = new_train, family = binomial() )
+summary(mod_full)
 
 
 
