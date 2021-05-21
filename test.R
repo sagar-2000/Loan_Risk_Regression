@@ -128,3 +128,6 @@ modelll <- train(def ~ term + grade + rate + home + debtIncRat + delinq2yr + inq
                trControl = train.control)
 # Summarize the results
 print(model)
+
+test$pred1 <- predict(mod_selected, newdata=test)
+lrm(def ~ pred1, data=test)
