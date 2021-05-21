@@ -121,5 +121,10 @@ summary(mod_full)
 mod_selected<- glm(def ~ term + grade + rate + home + debtIncRat + delinq2yr + inq6mth + accOpen24 + totalIlLim, data = train, family = binomial() )
 summary(mod_selected)
 
-
-
+library(caret)
+train.control <- trainControl(method = "cv", number = 5)
+# Train the model
+modelll <- train(def ~ term + grade + rate + home + debtIncRat + delinq2yr + inq6mth + accOpen24 + totalIlLim, data = train, method = "lm",
+               trControl = train.control)
+# Summarize the results
+print(model)
