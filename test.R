@@ -155,3 +155,14 @@ plotcp(dtree_test)
 dtree_test.pruned <- prune(dtree_test, cp=.01639344)
 prp(dtree_test.pruned, type = 2, extra = 104,
     fallen.leaves = TRUE, main="Decision Tree")
+
+install.packages("bootStepAIC")
+library(bootStepAIC)
+
+mod_selected_boot <-  boot.stepAIC(mod_selected, train, B = 50 )
+mod_selected_boot
+
+
+
+
+
