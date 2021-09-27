@@ -1,3 +1,3 @@
 # Loan_Risk_Regression
 
-#The main code is in Test.R#
+The main code is in Test.R
